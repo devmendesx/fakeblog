@@ -1,0 +1,38 @@
+<%- include('../../../partials/header.ejs') %>
+<body>
+  <div class="container">
+    <div class="card margin-card">
+        <div class="card-header">
+            <h2>Novo artigo</h1>
+        </div>
+      <div class="card-body">
+        <form method="POST" action="/api/articles">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="title">
+                <label for="floatingInput">Titulo do Artigo</label>
+            </div>
+            <div class="form-floating">
+                <select class="form-select" id="floatingSelect" name="category">
+                    <% categories.forEach(category => { %>
+                    <option value="<%=category.id%>"> <%= category.title %></option>
+                    <% }) %>
+                </select>
+                <label for="floatingSelect">Categoria</label>
+                <br>
+            </div>
+                <textarea class="form-control" placeholder="Digite a descrição do seu novo artigo." id="body" name="body"></textarea>        
+            <br>
+          <button class="btn button-submit">Adicionar novo artigo</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="/tinymce/tinymce.min.js"></script>
+  <script>
+      tinymce.init({
+          selector: "#body",
+          plugins: ['autolink advlist image lists print link preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons']
+      })
+  </script>
+</body>
+<%- include('../../../partials/footer.ejs') %>

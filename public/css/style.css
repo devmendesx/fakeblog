@@ -4,43 +4,92 @@
 }
 /* Navigation styles */
 .navbar-native {
-  background-color: #155262;
+  background-color: #9960b9;
 }
 .title-navbar {
   color: white;
-  margin-left: 15px;
 }
 
- /* Buttons styles */
-#button-submit {
+/* Buttons styles */
+.button-submit {
   border-radius: 5px;
-  background-color: #155262;
-  color:#FFF;
-  text-transform: uppercase;
+  background-color: #9960b9;
+  color: #fff;
   border: 1px solid grey;
-  width: 150px;
+  width: 100%;
   padding: 5px;
 }
-#button-clear {
+.button-clear {
   border-radius: 5px;
   background-color: #fff;
-  text-transform: uppercase;
   border: 1px solid grey;
   width: 150px;
   padding: 5px;
 }
-#buttonAdd{
-  background-color: #155262;
-  color: #FFF;
+.buttonAdd {
+  background-color: #9960b9;
+  color: #fff;
   padding: 10px;
-  float:right;
+  float: right;
   border-radius: 5px;
-  border: 1px solid grey;
+  border: 1px solid #FFF;
 }
-#buttonAdd a{
-  color: #FFF;
+.buttonSearch{
+  background-color: #9960b9;
+  color: #fff;
+  border-radius: 5px;
+  border: 1px solid #FFF;
+}
+.buttonAdd a {
+  color: #fff;
   text-decoration: none;
 }
-.margin-card{
-    margin-top: 50px;
+.margin-card {
+  margin-top: 50px;
 }
+.button a {
+  color: #fff;
+  text-decoration: none;
+}
+.deleteButton {
+  background-color: red;
+  border-radius: 5px;
+  padding: 7px;
+  color: #fff;
+  border: none;
+}
+.editButton {
+  background-color: #9960b9;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+/* CSS for index page*/
+.articles-index{
+  margin-top: 15px;
+}
+.section-index{
+  margin-right: 20px;
+}
+.user{
+  color: #fff;
+  margin-left: 5px;
+  width: 45px;
+}
+.login{
+  text-decoration: none;
+  margin-left: 15px;
+}
+.item-menu-aside{
+  background-color: #9960b9;
+  width: 100%;
+  padding:10px;
+  margin-top: 10px;
+  border:none;
+  border-radius: 2px;
+  color:#FFF;
+}
+.menu-right{
+  height: 250px;
+}
+

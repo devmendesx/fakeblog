@@ -1,0 +1,50 @@
+<%- include('../../../partials/header.ejs') %>
+<body>
+  <div class="container">
+    <div class="card margin-card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col"><h2>Categorias</h2></div>
+          <div class="col">
+            <span class="buttonAdd"
+              ><a href="/admin/categories/add">Criar nova categoria</a></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Slug</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% categories.forEach(category => { %>
+            <tr>
+              <td><%= category.title %></td>
+              <td><%= category.slug %></td>
+              <td>
+                <span class="editButton button"><a href="/admin/categories/<%= category.id %>">Editar</a></span>
+                <form method="POST" action="/api/categories/destroy/<%= category.id %>" style="display:inline;" onsubmit="destroy(event, this)">
+                  <button class="deleteButton button">Excluir</button>
+                </form>
+              </td>
+            </tr>
+            <% })%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    function destroy(event,form ){
+      event.preventDefault()
+      let destroy = confirm("Deseja deletar está categoria?")
+      if(destroy) form.submit()
+    }
+  </script>
+</body>
+<%- include('../../../partials/footer.ejs') %>

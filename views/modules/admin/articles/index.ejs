@@ -1,0 +1,52 @@
+<%- include('../../../partials/header.ejs') %>
+<body>
+  <div class="container">
+    <div class="card margin-card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col"><h2>Artigos</h2></div>
+          <div class="col">
+            <span class="buttonAdd"
+              ><a href="/admin/articles/add">Criar novo artigo</a></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Artigo</th>
+              <th>Slug</th>
+              <th>Categoria</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% articles.forEach(article => { %>
+            <tr>
+              <td><%= article.title %></td>
+              <td><%=article.slug %></td>
+              <td><%=article.category.title %></td>
+              <td>
+                <span class="editButton button"><a href="/admin/categories/<%= article.id %>">Editar</a></span>
+                <form method="POST" action="/api/articles/destroy/<%= article.id %>" style="display:inline;" onsubmit="destroy(event, this)">
+                  <button class="deleteButton button">Excluir</button>
+                </form>
+              </td>
+            </tr>
+            <% })%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    function destroy(event,form ){
+      event.preventDefault()
+      let destroy = confirm("Deseja deletar este artigo?")
+      if(destroy) form.submit()
+    }
+  </script>
+</body>
+<%- include('../../../partials/footer.ejs') %>

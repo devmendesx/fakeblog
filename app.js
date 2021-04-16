@@ -40,8 +40,14 @@ connection
   })
   .catch((error) => console.log(error));
 
+
+
 app.get("/", (req, res) => {
-  res.render("index");
+  Category.findAll().then((categories) => {
+    Article.findAll().then((articles) => {
+      res.render("index",{categories: categories, articles: articles}); 
+    })
+  });
 });
 
 app.listen(8080, () => {

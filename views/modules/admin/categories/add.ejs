@@ -1,0 +1,21 @@
+<%- include('../../../partials/header.ejs') %>
+<body>
+  <div class="container">
+    <div class="card margin-card">
+        <div class="card-header">
+            <h2>Nova categoria</h1>
+        </div>
+      <div class="card-body">
+        <form method="POST" action="/api/categories">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="title">
+              <label for="floatingInput">Titulo da Categoria</label>
+            </div>
+            <br>
+          <button class="btn button-submit">Adicionar nova categoria</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+<%- include('../../../partials/footer.ejs') %>

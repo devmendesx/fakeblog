@@ -1,5 +1,35 @@
 <%- include('partials/header.ejs')%>
-
-    <h1>Hello world!</h1>
-
+<div class="container articles-index">
+  <div class="row">
+    <section class="col-md-9 shadow-lg p-3 mb-5 bg-body rounded section-index">
+      <% articles.forEach(article => { %> 
+          <h1><%= article.title %></h1>
+        
+        <hr>
+          <%- article.body %> 
+        <h6>Redator: Raiane Santos</h6>
+      <% }) %>
+    </section>
+    <aside class="col-md-2 menu-right shadow-lg p-3 mb-5 bg-body rounded">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Pesquisar"
+          aria-label="Pesquisar"
+        />
+        <button class="btn buttonSearch" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+      <button class="item-menu-aside" type="button" data-toggle="collapse" data-target="#categories" aria-expanded="false" aria-controls="categories">Categorias</button>
+     <div class="collapse" id="categories">
+  <div class="card card-body">
+    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  </div>
+</div>
+      <button class="item-menu-aside">Artigos</button>
+    </aside>
+  </div>
+</div>
 <%- include('partials/footer.ejs') %>
