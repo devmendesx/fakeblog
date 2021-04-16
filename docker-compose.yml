@@ -1,46 +1,45 @@
-version: '3.4'
+version: "3.4"
 
 networks:
-    raisbbs-internal:
-    apps:
-        external: true
-
+  raisbbs-internal:
+  apps:
+    external: true
 
 services:
-    
-    raisbbs-frontend:
-        image: node:12.18-alpine
-        container_name: raisbbs-frontend
-        restart: "no"
-        ports:
-            - "$FRONTEND_PORT:8080"
-        volumes:
-            - ./docker/front-end/front-end.sh:/usr/local/bin/front-end.sh
-            - ./front-end:/var/www
-            - ./docker/front-end/locks:/root/locks
-        networks:
-            # - glxorama-world
-            - apps
-        working_dir: /var/dev
-        labels:
-            - "traefik.http.routers.glxorama-frontend.rule=Host(`raisbbs.com.br`)"
-            - "traefik.docker.network=apps"
-            - "traefik.enable=true"
-            - "traefik.basic.frontend.rule=Host:raisbbs.com.br"
+  raisbbs-frontend:
+    image: node:12.18-alpine
+    container_name: raisbbs-frontend
+    restart: "always"
+    tty: true
+    ports:
+      - "$FRONTEND_PORT:80"
+    volumes:
+      - ./docker/front-end/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - .:/var/dev/
+      - ./docker/front-end/locks:/root/locks
+    networks:
+      - apps
+      - raisbbs-internal
+    working_dir: /var/dev
+    labels:
+      - "traefik.http.routers.glxorama-frontend.rule=Host(`raisbbs.com.br`)"
+      - "traefik.docker.network=apps"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:raisbbs.com.br"
 
-    raisbbs-db:
-        image: mysql:8.0
-        container_name: glxorama-db
-        restart: "no"
-        tty: true
-        ports:
-            - "$MYSQL_PORT:3306"
-        environment: 
-            - "$MYSQL_USER: wordpress"
-            - "$MYSQL_PASSWORD: wordpress"
-        networks:
-            - raisbbs-internal
-        volumes:
-            - ./docker/db_data:/var/lib/mysql
-volumes:
-  db_data: {}
+  raisbbsdb:
+    image: mysql:8.0
+    container_name: raisbbsdb
+    restart: "always"
+    tty: true
+    ports:
+      - "$MYSQL_PORT:3306"
+    environment:
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+    command: --init-file /data/application/init.sql
+    networks:
+      - raisbbs-internal
+    volumes:
+      - ./docker/db_data:/var/lib/mysql
+      - ./database/init.sql:/data/application/init.sql

@@ -50,6 +50,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(8080, () => {
+app.listen(80, () => {
   console.log("Porta 8080 do projeto!");
 });
