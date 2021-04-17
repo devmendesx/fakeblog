@@ -17,22 +17,26 @@ const auth = require("../../../middleware/auth");
  */
 /* Rota principal de artigos */
 router.get("/articles", (req, res) => {
+  let user = req.session.user;
   res.send("Rota de Artigos")
 })
 
 
 /* Rotas de Views*/
 router.get("/admin/articles/add",auth, (req, res) => {
+  let user = req.session.user
   Category.findAll().then((categories) => {
-    res.render(articlesAdd, { categories: categories, breadcrumb: "Administração de Artigos"})
+    res.render(articlesAdd, { categories: categories, breadcrumb: "Administração de Artigos", user:user})
   })
 })
 
 router.get("/admin/articles",auth, (req,res) =>{
+  let user = req.session.user;
   Article.findAll({ include: [{model:Category}]}).then((articles) => {
     res.render(articlesIndex, {
       articles: articles,
       breadcrumb: "Administração de Artigos",
+      user: user
     });
   })
 })

@@ -16,27 +16,32 @@ const categoriesEdit = categoriesFolder + "/edit"
 let breadcrumbAdmin = 'Administração de Categorias'
 /* Rota para formulário de nova categoria*/
 router.get("/admin/categories/add", (req, res) => {
-  res.render(categoriesAdd, {breadcrumb: breadcrumbAdmin})
+  let user = req.session.user;
+  res.render(categoriesAdd, {breadcrumb: breadcrumbAdmin, user:user})
 })
 
 /*  Rota para listar todas as categorias.*/
 router.get("/admin/categories", (req, res) => {
+  let user = req.session.user;
   Category.findAll().then((categories) => {
     res.render(categoriesIndex, {
       categories: categories,
       breadcrumb: breadcrumbAdmin,
+      user:user
     });
   })
 })
 
 /* Rota para editar uma categoria */
 router.get("/admin/categories/:id", (req, res) => {
+  let user = req.session.user;
   let id = req.params.id;
   Category.findByPk(id).then((category) => {
     if (category != undefined)
       res.render(categoriesEdit, {
         category: category,
         breadcrumb: breadcrumbAdmin,
+        user:user
       });
     else res.render("/admin/categories")
   })

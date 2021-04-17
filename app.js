@@ -29,7 +29,7 @@ app.use(
   session({
     secret: "blog-db-nodejs",
     cookie: { maxAge: 60000 },
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: true
   })
 );
@@ -70,9 +70,20 @@ app.get("/", (req, res) => {
 });
  /* Login */
 app.get("/login", (req,res) => {
-  let fail = req.session.loginFailure
-  res.render("login", {breadcrumb: "Login", fail:fail})
+  let message = req.session.loginMessage;
+  let fail = req.session.loginFailure;
+  res.render("login", {
+    breadcrumb: "Login",
+    fail: fail,
+    message: message,
+  });
 })
+
+app.get("/logout", (req,res) => {
+  req.session.user = undefined
+  res.redirect("/")
+})
+
 app.listen(80, () => {
   console.log("Porta 8080 do projeto!");
 });

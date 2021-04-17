@@ -10,17 +10,21 @@ const usersEdit = usersFolder + "/edit";
 
 /* View Routes for Admin Users */
 router.get("/admin/users", (req, res) => {
+  let user = req.session.user;
   User.findAll().then((users) => {
     res.render(usersIndex, {
       breadcrumb: "Administração de Usuários",
       users: users,
+      user: user
     });
   });
 });
 
 router.get("/admin/users/add", (req, res) => {
+  let user = req.session.user;
   res.render(usersAdd, {
     breadcrumb: "Criar novo usuário",
+    user:user
   });
 });
 
@@ -34,7 +38,7 @@ router.post("/api/users", (req, res) => {
   let profile = req.body.profile
   let encripthash = bcrypt.genSaltSync(15);
   password = bcrypt.hashSync(password, encripthash);
-
+  
   User.findOne({ where: { email: email } }).then((userEmail) => {
     User.create({
       username: username,
@@ -61,17 +65,22 @@ router.post("/authenticate", (req,res) =>{
         req.session.user = {
           id: user.id,
           email: user.email,
+          name: user.name,
           username: user.username,
           profile: user.profile
         }
+        req.session.loginFailure = false
+        req.session.loginMessage = ""
         res.redirect("/")
-      }else if(user == undefined){
-        req.session.loginFailure = "Usuário inválido"
-        res.redirect("/login")
-      }else if(!compare){
-       req.session.loginFailure = "Senha inválida";
-       res.redirect("/login");
+      }else{
+        req.session.loginFailure = true
+        req.session.loginMessage = "Senha inválida";
+         res.redirect("/login");
       }
+    }else if(user == null) {
+          req.session.loginFailure = true;
+          req.session.loginMessage = "Usuário inválido";
+          res.redirect("/login");
     }
   })
 })

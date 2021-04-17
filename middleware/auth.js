@@ -3,7 +3,7 @@ function auth(req, res, next) {
     if(req.session.user.profile == 1){
         next();
     }else{
-        res.redirect('/')
+        res.redirect('/login')
     }
 }
 

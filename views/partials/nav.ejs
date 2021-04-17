@@ -4,7 +4,12 @@
       <span class="title-navbar">Blog da Rairai</span>
     </a>
     <div class="d-flex align-items-center">
-      <span class="login button"><a href="/login"><i class="far fa-user"></i></a></span>
+      <% if(user != undefined){ %> 
+      <span style="color: #FFF;"><%= user.username %></span>
+      <span class="login button"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></span>
+      <% }else {%>
+      <span class="login button"><a href="/login"><i class="far fa-user"></i> Login</a></span>
+      <% }%>
     </div>
   </div>
 </nav>
