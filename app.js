@@ -28,9 +28,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   session({
     secret: "blog-db-nodejs",
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 31536000 },
     saveUninitialized: true,
-    resave: true
+    resave: true,
   })
 );
 
