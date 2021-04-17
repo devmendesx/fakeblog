@@ -1,0 +1,51 @@
+<%- include('../../../partials/header.ejs') %>
+  <div class="container">
+    <div class="card margin-card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col"><h2>Usuários</h2></div>
+          <div class="col">
+            <span class="buttonAdd"
+              ><a href="/admin/users/add">Criar novo usuário</a></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+              <tr>
+                <td><%= user.username %></td>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td>
+                  <span class="editButton button"><a href="/admin/users/userId">Editar</a></span>
+                  <form method="POST" action="/api/users/destroy/UserId" style="display:inline;" onsubmit="destroy(event, this)">
+                    <button class="deleteButton button">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    function destroy(event,form ){
+      event.preventDefault()
+      let destroy = confirm("Deseja deletar este usuário?")
+      if(destroy) form.submit()
+    }
+  </script>
+
+<%- include('../../../partials/footer.ejs') %>

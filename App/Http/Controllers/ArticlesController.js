@@ -9,6 +9,7 @@ const ArticlesFolder = "modules/admin/articles"
 const articlesAdd = ArticlesFolder + "/add"
 const articlesIndex = ArticlesFolder + "/index"
 const articlesEdit = ArticlesFolder + "/edit"
+const auth = require("../../../middleware/auth");
 
 /**
  * @author Matheus Henrique
@@ -21,21 +22,24 @@ router.get("/articles", (req, res) => {
 
 
 /* Rotas de Views*/
-router.get("/admin/articles/add", (req, res) => {
+router.get("/admin/articles/add",auth, (req, res) => {
   Category.findAll().then((categories) => {
-    res.render(articlesAdd, { categories: categories })
+    res.render(articlesAdd, { categories: categories, breadcrumb: "Administração de Artigos"})
   })
 })
 
-router.get("/admin/articles", (req,res) =>{
+router.get("/admin/articles",auth, (req,res) =>{
   Article.findAll({ include: [{model:Category}]}).then((articles) => {
-    res.render(articlesIndex, {articles: articles})
+    res.render(articlesIndex, {
+      articles: articles,
+      breadcrumb: "Administração de Artigos",
+    });
   })
 })
 
 /* Rotas para as APIs*/
 
-router.post("/api/articles", (req,res) => {
+router.post("/api/articles",auth, (req,res) => {
   let title = req.body.title
   let body = req.body.body
   let category = req.body.category
@@ -47,7 +51,7 @@ router.post("/api/articles", (req,res) => {
       categoryId: category
     }).then( () => res.redirect("/articles")) 
 })
-router.post("/api/articles/destroy/:id", (req, res) => {
+router.post("/api/articles/destroy/:id", auth,(req, res) => {
   let id = req.params.id;
   if (id != undefined && !isNaN(id)) {
     Article.destroy({

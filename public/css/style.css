@@ -32,13 +32,13 @@
   padding: 10px;
   float: right;
   border-radius: 5px;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
 }
-.buttonSearch{
+.buttonSearch {
   background-color: #9960b9;
   color: #fff;
   border-radius: 5px;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
 }
 .buttonAdd a {
   color: #fff;
@@ -65,31 +65,49 @@
   border: none;
 }
 /* CSS for index page*/
-.articles-index{
+.articles-index {
   margin-top: 15px;
 }
-.section-index{
-  margin-right: 20px;
+.section-index {
+  margin-right: 10px;
 }
-.user{
+.user {
   color: #fff;
   margin-left: 5px;
   width: 45px;
 }
-.login{
+.login {
   text-decoration: none;
   margin-left: 15px;
 }
-.item-menu-aside{
+ /* Barra de navegação aside*/ 
+.item-menu-aside {
   background-color: #9960b9;
   width: 100%;
-  padding:10px;
+  padding: 10px;
   margin-top: 10px;
-  border:none;
+  border: none;
   border-radius: 2px;
-  color:#FFF;
+  color: #fff;
+  font-size: 16px;
+  text-align: left;
 }
-.menu-right{
-  height: 250px;
+.menu-right {
+  min-height: 250px;
+}
+.transition-group{
+  transition: 0.2s ease-in;
+}
+.list-group-item a{
+  text-decoration: none;
+  color: black;
 }
 
+@media only screen and (max-width: 768px) {
+  .articles-index {
+    margin-top: 10px;
+  }
+  .section-index {
+    margin-right: 0px;
+  }
+}

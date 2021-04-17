@@ -1,0 +1,40 @@
+<%- include('../../../partials/header.ejs') %>
+
+  <div class="container">
+    <div class="card margin-card">
+        <div class="card-header">
+            <h2>Novo usuário</h1>
+        </div>
+      <div class="card-body">
+        <form method="POST" action="/api/users">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nome do usuário" autocomplete="off" name="username" required>
+                    <label for="floatingInput">Nome do usuário</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="name" required >
+                    <label for="floatingInput">Nome</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="email" required>
+                    <label for="floatingInput">Email</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="password" required>
+                    <label for="floatingInput">Senha</label>
+               </div>
+               <div class="form-floating">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="profile">
+                    <option value="1">Administrador</option>
+                    <option value="2">Usuário</option>
+                </select>
+                <label for="floatingSelect">Perfil</label>
+                </div>
+           <br>
+          <button class="btn button-submit">Adicionar novo usuário</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<%- include('../../../partials/footer.ejs') %>

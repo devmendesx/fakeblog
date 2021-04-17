@@ -13,16 +13,19 @@ const categoriesEdit = categoriesFolder + "/edit"
  * @description Rotas para APIs e Views
  */
 /* Rotas para Views*/
-
+let breadcrumbAdmin = 'Administração de Categorias'
 /* Rota para formulário de nova categoria*/
 router.get("/admin/categories/add", (req, res) => {
-  res.render(categoriesAdd)
+  res.render(categoriesAdd, {breadcrumb: breadcrumbAdmin})
 })
 
 /*  Rota para listar todas as categorias.*/
 router.get("/admin/categories", (req, res) => {
   Category.findAll().then((categories) => {
-    res.render(categoriesIndex, { categories: categories })
+    res.render(categoriesIndex, {
+      categories: categories,
+      breadcrumb: breadcrumbAdmin,
+    });
   })
 })
 
@@ -31,7 +34,10 @@ router.get("/admin/categories/:id", (req, res) => {
   let id = req.params.id;
   Category.findByPk(id).then((category) => {
     if (category != undefined)
-      res.render(categoriesEdit, { category: category })
+      res.render(categoriesEdit, {
+        category: category,
+        breadcrumb: breadcrumbAdmin,
+      });
     else res.render("/admin/categories")
   })
 })
