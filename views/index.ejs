@@ -70,7 +70,7 @@
           <% }) %>
         </ul>
       </div>
-      <% if(user.profile ==1) { %>
+      <% if((user != undefined && user.profile ==1)) { %>
       <button
         class="item-menu-aside"
         data-toggle="collapse"
