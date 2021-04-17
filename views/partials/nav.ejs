@@ -5,7 +5,7 @@
     </a>
     <div class="d-flex align-items-center">
       <% if(user != undefined){ %> 
-      <span style="color: #FFF;"><%= user.username %></span>
+      <span style="color: #FFF;"><%= user.name %></span>
       <span class="login button"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></span>
       <% }else {%>
       <span class="login button"><a href="/login"><i class="far fa-user"></i> Login</a></span>
