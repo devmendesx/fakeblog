@@ -49,7 +49,7 @@ router.post("/api/articles",auth, (req,res) => {
       slug: Slugify(title).toLowerCase(),
       body: body,
       categoryId: category
-    }).then( () => res.redirect("/articles")) 
+    }).then( () => res.redirect("/")) 
 })
 router.post("/api/articles/destroy/:id", auth,(req, res) => {
   let id = req.params.id;
