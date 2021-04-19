@@ -2,7 +2,8 @@
 const Sequelize = require("sequelize");
 const Connection = require("../../database/server");
 const Category = require("../Models/Category");
-
+const moment = require("moment")
+moment.locale("pt-br")
 /* Define model Article and create table*/
 const Article = Connection.define("articles", {
   title: {
@@ -16,6 +17,11 @@ const Article = Connection.define("articles", {
   body: {
     type: Sequelize.TEXT,
     allowNull: false,
+  },
+  createdAt: {
+    type: Sequelize.DATE,
+    //note here this is the guy that you are looking for
+    get() { return moment(this.getDataValue('createdAt', "18/10/2021")).format('LLLL')},
   },
 });
 

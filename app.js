@@ -58,7 +58,7 @@ connection
 app.get("/", (req, res) => {
   let user = req.session.user
   Category.findAll().then((categories) => {
-    Article.findAll({ include: [{ model: Category }] }).then((articles) => {
+    Article.findAll({ include: [{ model: Category }], order:[['createdAt', 'DESC']] }).then((articles) => {
       res.render("index", {
         categories: categories,
         articles: articles,
