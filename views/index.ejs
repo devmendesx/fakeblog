@@ -1,11 +1,11 @@
-<%- include('partials/header.ejs')%>
+<%- include('partials/header.ejs', {user:user}) %>
 <div class="container articles-index">
   <div class="row">
     <div class="col-md-9 article">
       <% articles.forEach(article => { %>
       <div class="card shadow-lg p-3 mb-5 bg-body rounded section-index">
         <div class="card-header">
-          <h2><%= article.title %></h2>
+          <h3><%= article.title %></h3>
         </div>
         <div class="card-body">
           <%- article.body %>
@@ -41,7 +41,7 @@
         <ul class="list-group">
           <% categories.forEach(category => { %>
           <li class="list-group-item">
-            <a class="item-link" href="/<%= category.slug %>/"
+            <a class="item-link" href="/categories/<%= category.slug %>/"
               ><%= category.title%></a
             >
           </li>

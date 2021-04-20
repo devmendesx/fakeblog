@@ -1,0 +1,169 @@
+<%- include('../../partials/header.ejs', {user:user})%>
+<div class="container articles-index">
+  <div class="row">
+    <div class="col-md-9 article">
+      <% if (listArticles.length > 0) { %> <% listArticles.forEach(article => {
+      %>
+      <div class="card shadow-lg p-3 mb-5 bg-body rounded section-index">
+        <div class="card-header">
+          <h3><%= article.title %></h3>
+        </div>
+        <div class="card-body">
+          <%- article.body %>
+          <p><%= article.createdAt %></p>
+        </div>
+      </div>
+      <% }) %> <% }else{ %>
+      <div class="card shadow-lg p-3 mb-5 bg-body rounded section-index">
+        <h2>Nenhum artigo encontrado, publique o primeiro :)</h2>
+      </div>
+      <%}%>
+    </div>
+    <aside class="col-md-2 menu-right shadow-lg p-3 mb-5 bg-body rounded">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Pesquisar"
+          aria-label="Pesquisar"
+        />
+        <button class="btn buttonSearch" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+
+      <button
+        class="item-menu-aside"
+        data-toggle="collapse"
+        data-target="#categories-group"
+        aria-expanded="true"
+        aria-controls="categories-group"
+      >
+        <i class="fas fa-tshirt"></i> Categorias
+      </button>
+
+      <div id="categories-group" class="collapse transition-group">
+        <ul class="list-group">
+          <% categories.forEach(category => { %>
+          <li class="list-group-item">
+            <a class="item-link" href="/categories/<%= category.slug %>/"
+              ><%= category.title%></a
+            >
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <button
+        class="item-menu-aside"
+        data-toggle="collapse"
+        data-target="#articles-group"
+        aria-expanded="true"
+        aria-controls="articles-group"
+      >
+        <i class="far fa-newspaper"></i> Artigos
+      </button>
+      <div id="articles-group" class="collapse transition-group">
+        <ul class="list-group">
+          <% articles.forEach(article => { %>
+          <li class="list-group-item">
+            <a
+              class="item-link"
+              href="/<%=article.category.slug%>/<%= article.slug %>/<%=article.id%>"
+              ><%= article.title%></a
+            >
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <% if((user != undefined && user.profile ==1)) { %>
+      <button
+        class="item-menu-aside"
+        data-toggle="collapse"
+        data-target="#admin"
+        aria-expanded="true"
+        aria-controls="admin"
+      >
+        <i class="fas fa-tshirt"></i> Administração
+      </button>
+      <%}%>
+      <div id="admin" class="collapse transition-group">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <button
+              class="item-menu-aside"
+              data-toggle="collapse"
+              data-target="#categories-admin"
+              aria-expanded="true"
+              aria-controls="categories-admin"
+            >
+              <i class="fas fa-users-cog"></i>Categoria
+            </button>
+            <div id="categories-admin" class="collapse transition-group">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/categories/"
+                    >Listar categorias</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/categories/add"
+                    >Adicionar categoria</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <button
+              class="item-menu-aside"
+              data-toggle="collapse"
+              data-target="#articles-admin"
+              aria-expanded="true"
+              aria-controls="articles-admin"
+            >
+              <i class="fas fa-users-cog"></i>Artigos
+            </button>
+            <div id="articles-admin" class="collapse transition-group">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/articles/"
+                    >Listar artigos</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/articles/add"
+                    >Adicionar novo artigo</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <button
+              class="item-menu-aside"
+              data-toggle="collapse"
+              data-target="#users-admin"
+              aria-expanded="true"
+              aria-controls="users-admin"
+            >
+              <i class="fas fa-users-cog"></i>Usuários
+            </button>
+            <div id="users-admin" class="collapse transition-group">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/users/">Listar usuários</a>
+                </li>
+                <li class="list-group-item">
+                  <a class="item-link" href="/admin/users/add"
+                    >Adicionar novo usuário</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+<%- include('../../partials/footer.ejs') %>

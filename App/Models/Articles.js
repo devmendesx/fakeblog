@@ -21,7 +21,7 @@ const Article = Connection.define("articles", {
   createdAt: {
     type: Sequelize.DATE,
     //note here this is the guy that you are looking for
-    get() { return moment(this.getDataValue('createdAt', "18/10/2021")).format('LLLL')},
+    get() { return moment(this.getDataValue('createdAt')).utc('pt_BR').format('LLL')},
   },
 });
 
