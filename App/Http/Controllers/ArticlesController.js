@@ -1,37 +1,77 @@
-const app = require("express")
-const router = app.Router()
+const app = require("express");
+const router = app.Router();
 
-const Article = require("../../Models/Articles")
-const Category = require("../../Models/Category")
-const Slugify = require("slugify")
+const Article = require("../../Models/Articles");
+const Category = require("../../Models/Category");
+const Slugify = require("slugify");
 
-const ArticlesFolder = "modules/admin/articles"
-const articlesAdd = ArticlesFolder + "/add"
-const articlesIndex = ArticlesFolder + "/index"
-const articlesEdit = ArticlesFolder + "/edit"
+const ArticlesFolder = "modules/admin/articles";
+const articlesAdd = ArticlesFolder + "/add";
+const articlesIndex = ArticlesFolder + "/index";
+const articlesEdit = ArticlesFolder + "/edit";
+
+/* Blog final folders*/
+const articlesFinalFolder = "modules/articles";
+const articlesFinalIndex = articlesFinalFolder + "/index";
+
 const auth = require("../../../middleware/auth");
-const { default: slugify } = require("slugify")
+const { default: slugify } = require("slugify");
 
 /**
  * @author Matheus Henrique
  * @description Rotas para APIs e Views
  */
 /* Rota principal de artigos */
-router.get("/articles", (req, res) => {
+router.get("/:category/:article/:id", (req, res) => {
   let user = req.session.user;
-  res.send("Rota de Artigos")
-})
-
+  let slug = req.params.article
+  let id = req.params.id;
+  let listArticles = {};
+  let listCaterogies = {};
+  Category.findAll()
+    .then((categories) => {
+      listCaterogies = categories;
+    })
+    .catch((error) => console.log(error));
+ Article.findAll({
+   include: [{ model: Category }],
+   order: [["createdAt", "DESC"]],
+ })
+   .then((articles) => {
+     listArticles = articles;
+   })
+   .catch((error) => console.log(error));
+   
+  Article.findOne({ where: { id: id } })
+    .then((article) => {
+      console.log(article)
+      if (article != undefined) {
+        res.render(articlesFinalIndex, {
+          listArticles: article,
+          articles: listArticles,
+          categories: listCaterogies,
+          slug: slug,
+          user: user,
+          breadcrumb: article.title,
+        });
+      }
+    })
+    .catch((error) => console.log(error));
+});
 
 /* Rotas de Views*/
-router.get("/admin/articles/add",auth, (req, res) => {
-  let user = req.session.user
+router.get("/admin/articles/add", auth, (req, res) => {
+  let user = req.session.user;
   Category.findAll().then((categories) => {
-    res.render(articlesAdd, { categories: categories, breadcrumb: "Administração de Artigos", user:user})
-  })
-})
+    res.render(articlesAdd, {
+      categories: categories,
+      breadcrumb: "Administração de Artigos",
+      user: user,
+    });
+  });
+});
 
-router.get("/admin/articles",auth, (req,res) =>{
+router.get("/admin/articles", auth, (req, res) => {
   let user = req.session.user;
   Article.findAll({
     include: [{ model: Category }],
@@ -43,41 +83,43 @@ router.get("/admin/articles",auth, (req,res) =>{
       user: user,
     });
   });
-})
-router.get("/admin/articles/edit/:id", auth, (req,res) =>{
-  let id = req.params.id
+});
+router.get("/admin/articles/edit/:id", auth, (req, res) => {
+  let id = req.params.id;
   let user = req.session.user;
-  Article.findByPk(id).then( article => {
-    if(article != undefined){
-      Category.findAll().then((categories) =>{
-        res.render(articlesEdit, {
-          article: article,
-          categories: categories,
-          breadcrumb: "Edição de Artigo",
-          user: user,
+  Article.findByPk(id)
+    .then((article) => {
+      if (article != undefined) {
+        Category.findAll().then((categories) => {
+          res.render(articlesEdit, {
+            article: article,
+            categories: categories,
+            breadcrumb: "Edição de Artigo",
+            user: user,
+          });
         });
-      }) 
-    }else{
-      res.redirect("/admin/articles")
-    }
-  }).catch(error => res.redirect("/"))
-})
+      } else {
+        res.redirect("/admin/articles");
+      }
+    })
+    .catch((error) => res.redirect("/"));
+});
 
 /* Rotas para as APIs*/
 
-router.post("/api/articles",auth, (req,res) => {
-  let title = req.body.title
-  let body = req.body.body
-  let category = req.body.category
+router.post("/api/articles", auth, (req, res) => {
+  let title = req.body.title;
+  let body = req.body.body;
+  let category = req.body.category;
 
-    Article.create({
-      title: title,
-      slug: Slugify(title).toLowerCase(),
-      body: body,
-      categoryId: category
-    }).then( () => res.redirect("/")) 
-})
-router.post("/api/articles/destroy/:id", auth,(req, res) => {
+  Article.create({
+    title: title,
+    slug: Slugify(title).toLowerCase(),
+    body: body,
+    categoryId: category,
+  }).then(() => res.redirect("/"));
+});
+router.post("/api/articles/destroy/:id", auth, (req, res) => {
   let id = req.params.id;
   if (id != undefined && !isNaN(id)) {
     Article.destroy({
@@ -86,18 +128,26 @@ router.post("/api/articles/destroy/:id", auth,(req, res) => {
   } else res.redirect("/admin/articles");
 });
 
-router.post("/api/articles/edit/:id", auth, (req,res) =>{
-  let id = req.params.id
+router.post("/api/articles/edit/:id", auth, (req, res) => {
+  let id = req.params.id;
   let title = req.body.title;
   let body = req.body.body;
   let category = req.body.category;
 
-  Article.update({title:title,body:body,categoryId:category, slug:slugify(title).toLowerCase()},{where:{id:id}})
-  .then( () =>{
-    res.redirect("/admin/articles")
-  }).catch(err => {
-    res.redirect("/")
-  })
-
-})
+  Article.update(
+    {
+      title: title,
+      body: body,
+      categoryId: category,
+      slug: slugify(title).toLowerCase(),
+    },
+    { where: { id: id } }
+  )
+    .then(() => {
+      res.redirect("/admin/articles");
+    })
+    .catch((err) => {
+      res.redirect("/");
+    });
+});
 module.exports = router;
