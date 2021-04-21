@@ -10,8 +10,8 @@ const categoriesAdd = categoriesFolder + "/add";
 const categoriesIndex = categoriesFolder + "/index";
 const categoriesEdit = categoriesFolder + "/edit";
 
-/* Blog final folders*/ 
-const categoriesFinalFolder = "modules/categories"
+/* Blog final folders*/
+const categoriesFinalFolder = "modules/categories";
 const categoriesFinalAdd = categoriesFinalFolder + "/add";
 const categoriesFinalIndex = categoriesFinalFolder + "/index";
 const categoriesFinalEdit = categoriesFinalFolder + "/edit";
@@ -28,7 +28,7 @@ router.get("/categories/:slug", (req, res) => {
   let slug = req.params.slug;
   let listArticles = {};
   let listCategories = {};
-  let user = req.session.user
+  let user = req.session.user;
   Article.findAll({
     include: [{ model: Category }],
     order: [["createdAt", "DESC"]],
@@ -43,7 +43,11 @@ router.get("/categories/:slug", (req, res) => {
     })
     .catch((error) => console.log(error));
 
-  Category.findOne({ where: { slug: slug }, include: [{ model: Article }] })
+  Category.findOne({
+    where: { slug: slug },
+    include: [{ model: Article }],
+    order: [[{ model: Article },"createdAt", "DESC"]],
+  })
     .then((category) => {
       res.render(categoriesFinalIndex, {
         listArticles: category.articles,
