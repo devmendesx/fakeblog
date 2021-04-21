@@ -37,7 +37,7 @@ router.get("/categories/:slug", (req, res) => {
       listArticles = articles;
     })
     .catch((error) => console.log(error));
-  Category.findAll()
+  Category.findAll({ order: [["createdAt", "DESC"]] })
     .then((categories) => {
       listCategories = categories;
     })
