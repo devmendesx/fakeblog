@@ -1,0 +1,45 @@
+<%- include('../../../partials/header.ejs', {user:user}) %>
+
+  <div class="container">
+    <div class="card margin-card">
+        <div class="card-header">
+            <h2>Editar usuário</h1>
+        </div>
+      <div class="card-body">
+        <form method="POST" action="/api/users/<%=users.id%>">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nome do usuário" autocomplete="off" name="username" value="<%=users.username%>" required>
+                    <label for="floatingInput">Nome do usuário</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="name" value="<%=users.name%>" required>
+                    <label for="floatingInput">Nome</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="email" value="<%=users.email%>" required>
+                    <label for="floatingInput">Email</label>
+               </div>
+               <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingInput" placeholder="Nome da Categoria" autocomplete="off" name="password" value="<%=users.password%>"required>
+                    <label for="floatingInput">Senha</label>
+               </div>
+               <div class="form-floating">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="profile">
+                    <% if (users.profile  == 1) { %>
+                    <option value="1" selected>Administrador</option> 
+                    <option value="2">Usuário</option>
+                     <% }else{ %>
+                    <option value="1">Administrador</option> 
+                    <option value="2" selected>Usuário</option>
+                        <%}%>
+                </select>
+                <label for="floatingSelect">Perfil</label>
+                </div>
+           <br>
+          <button class="btn button-submit">Atualizar usuário</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<%- include('../../../partials/footer.ejs') %>

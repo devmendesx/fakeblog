@@ -22,7 +22,7 @@ const { default: slugify } = require("slugify");
  * @description Rotas para APIs e Views
  */
 /* Rota principal de artigos */
-router.get("/:category/:article/:id", (req, res) => {
+router.get("/articles/:article/:id", (req, res) => {
   let user = req.session.user;
   let slug = req.params.article
   let id = req.params.id;
@@ -44,7 +44,6 @@ router.get("/:category/:article/:id", (req, res) => {
    
   Article.findOne({ where: { id: id } })
     .then((article) => {
-      console.log(article)
       if (article != undefined) {
         res.render(articlesFinalIndex, {
           listArticles: article,

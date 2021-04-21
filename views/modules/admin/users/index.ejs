@@ -28,8 +28,8 @@
                 <td><%= user.name %></td>
                 <td><%= user.email %></td>
                 <td>
-                  <span class="editButton button"><a href="/admin/users/userId">Editar</a></span>
-                  <form method="POST" action="/api/users/destroy/UserId" style="display:inline;" onsubmit="destroy(event, this)">
+                  <span class="editButton button"><a href="/admin/users/<%= user.id %>">Editar</a></span>
+                  <form method="POST" action="/api/users/destroy/<%= user.id %>" style="display:inline;" onsubmit="destroy(event, this)">
                     <button class="deleteButton button">Excluir</button>
                   </form>
                 </td>
